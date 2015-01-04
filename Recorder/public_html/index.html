@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="qc:admins" content="157050325372452651552636" />
+        <link href="css/united/bootstrap.css" rel="stylesheet" type="text/css" />
+        <script src="js/angular.js/angular.js"></script>
+        <script src="js/angular.js/angular-resource.js"></script>
+        <!--        <script src="js/services.js"></script>
+                <script src="js/app.js"></script>-->
+        <script src="js/controllers.js" ></script>
+        <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+        <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <link href="css/master.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div id="top">
+            <div id="topInfo">
+
+            </div>
+            <div id="topAdv">
+
+            </div>
+            <div id="topNav">
+                <nav class="container navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#"><strong>美食送到家</strong></a> 
+                    </div>
+                </nav>
+            </div>
+        </div> 
+        <div class="container" ng-controller="UserController">
+            <input type="text" ng-model="nikename"/>
+            {{nikename}}
+        </div>
+        <div id="bottom" class="container navbar-fixed-bottom">
+        </div> 
+    </body>
+</html>
