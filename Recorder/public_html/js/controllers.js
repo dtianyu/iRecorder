@@ -5,12 +5,54 @@
  */
 
 
-function UserController($scope,$http){
-    
-    $scope.nikename;
-    
-}
+function UserController($scope, $routeParams, $http, $location, $cookieStore, Space) {
+    var key_cookie = "cn.lightshell.recorder.auth";
+    var url_login = "http://ar.hanbell.com.cn:8480/RESTWebService/webresources/irecorder.entity.sysuser/";
+    $scope.userid;
+    $scope.pwd;
+    $scope.user = $cookieStore.get(key_cookie);
+    $scope.space;
 
-UserController.$inject = ['$scope', '$http'];
+    if (($scope.user === undefined) || ($scope.user === null)) {
+        $location.path("/login");
+    }
+
+    if (($routeParams.userId !== undefined) && ($routeParams.userId !== $scope.user.id.toString())) {
+        $location.path("/login");
+    }
+
+    if (($routeParams.userId !== undefined) && ($routeParams.userId !== null)) {
+        $scope.space = Space.get({userId: $routeParams.userId});
+    }
+
+    $scope.login = function () {
+        url_login = url_login + $scope.userid + "-" + $scope.pwd;
+        $http.get(url_login)
+                .success(function (response)
+                {
+                    $scope.user = response;
+                    $cookieStore.put(key_cookie, $scope.user);
+                    $location.path("/space/" + $scope.user.id);
+                })
+                .error(function () {
+                    alert("登录失败，请重试！");
+                });
+    };
+}
+;
+
+//    function securityMD5() {
+//
+//        alert('123');
+//        $scope.md5value = $scope.nikename;
+////        return $(md5(value));
+//    }
+//    ;
+UserController.$inject = ['$scope', '$routeParams', '$http', '$location', '$cookieStore', 'Space'];
+
+function BookController($scope, $routeParams, $cookieStore, Book) {
+}
+BookController.$inject = ['$scope', '$routeParams', '$cookieStore', 'Book'];
+
 
 
