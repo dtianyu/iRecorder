@@ -4,16 +4,16 @@
             <div class="row">
                 <div class="col-md-4 panel-title">
                     <h4>             
-                        <span class="title">
-                            <strong>{{space.name}}</strong>                                    
+                        <span class="title text-primary">
+                            <strong>{{user.username}}</strong>                                
                         </span>                  
                     </h4>
-                    <h6>
-                        <span class="content-rank-stars content-stars-{{space.hot}}"></span>
-                        <small>人均消费：<strong>{{space.rjxf}}</strong>元</small>
+                    <h6>                      
+                        <span><strong>年级:{{user.grade}}</strong></span><small>班级:{{user.class}}</small>
+                        <span class="content-rank-stars content-stars-{{user.level}}"></span>
                     </h6>
                     <h6>
-                        地址：{{space.address}}
+                        学校：{{user.school}}
                     </h6>
                 </div>
 
@@ -22,26 +22,22 @@
                 </div>
             </div>           
             <ul>
-                <li ng-repeat="content in space.content| filter:query ">
+                <li ng-repeat="book in space.books| filter:query ">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h6 class="panel-title">
                                 <span class="title">
-                                    <a><strong>{{content.name}}</strong></a>                                    
+                                    <a><strong>{{book.name}}</strong></a>                                    
                                 </span>
-                                <span class="content-rank-stars content-stars-{{content.hot}}"></span>
+                                <span class="title">
+                                    <a><strong>{{book.author}}</strong></a>                                    
+                                </span>
+                                <span class="content-rank-stars content-stars-{{book.hot}}"></span>
                             </h6>
                         </div>
                         <div class="panel-body">
-                            <div class="pic">
-                                <img ng-src="{{content.images[0]}}"/>
-                            </div>
-                            <div class="text">
-                                <p><span class="title">价格:</span><strong>{{content.price}}</strong>元/{{content.unit}}
-                                    <button type="button" class="btn btn-primary btn-xs cart-add" ng-click="addToCart(content)">我要</button>
-                                </p>                    
-                                <p><span class="title">特色:</span>{{content.flavor}}</p>
-                            </div>
+                            <p><span class="title">读后感:</span><strong>{{book.remark}}</strong></p>                    
+                            <h4><a href="#/book/{{user.id}}" class="cart-go label label-primary">继续读</a></h4>
                         </div>
                     </div>
                 </li>
@@ -58,19 +54,16 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand cartLogo"></a>     
-                    <a class="navbar-brand" href="#/cart/{{space.id}}">我的菜单<span class="badge">{{totalQty}}份</span></a>
+                    <a class="navbar-brand" href="#/cart/{{space.id}}">我的计划<span class="badge"></span></a>
                 </div>
                 <div id ="cart-detail" class="navbar-toggle">
                     <ul class="nav nav-pills nav-stacked">
                         <li class="active"><button type="button" class="btn  btn-xs cart-clear" ng-disabled="isCartEmpty()" ng-click="clearCart()">重新点</button><a>菜单明细</a></li>
-                        <li ng-repeat="item in cartItems">
-                            <button type="button" class="btn btn-primary btn-xs cart-del" ng-click="delFromCart(item)">删除</button>                                    
-                            <h5>{{item.name}} {{item.price}}元<span class="cart-qty">
-                                    <a class="less" ng-click="decreaseCartQty(item)">-</a>
-                                    <span class="badge">{{item.qty}}{{item.unit}}</span>
-                                    <a class="more" ng-click="increaseCartQty(item)">+</a>
-                                </span>
-                            </h5>                            
+                        <li class="active">                                 
+                            <h4><a href="#/book/{{user.id}}" class="label label-primary">我要阅读</a></h4>                      
+                        </li>
+                        <li>                                 
+                            <h4><a href="#/book/{{user.id}}" class="label label-primary">我要看书</a></h4>                            
                         </li>
                         <li class="active">
                             <button type="button" class="btn btn-success btn-xs cart-submit" ng-disabled="isCartEmpty()" ng-click="submitCart()">快送来</button>

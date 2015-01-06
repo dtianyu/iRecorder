@@ -93,61 +93,8 @@ input.orderProp{
     margin-right: 5px;
 }
 
-.navbar-header button.navbar-toggle{
-    margin-right: 0px;
-}
-
-.panel{
-    margin-bottom: 10px;
-}
-
-.panel-body .ui-datalist{
-    min-height: 205px;
-}
-
-.panel-body .ui-datalist-item{
-    margin: 0px 1px 1px -30px;
-    position: relative;
-    overflow: hidden;
-    padding-right: 50px;
-    white-space: nowrap;
-    text-overflow:ellipsis;
-    -ms-text-overflow: ellipsis;/* IE/Safari */
-    -o-text-overflow: ellipsis;/* Opera */
-    -moz-binding: url("ellipsis.xml#ellipsis");/*FireFox*/ 
-}
-
-.panel-body .ui-datalist-item span {
-    margin-right: -40px;
-}
-
-.panel-body .ui-datalist-item .date{
-    float: right;
-}
-/*
-.panel-body #news{
-    height: 230px;
-}
-
-.panel-body #news ul li{
-    padding-top: 5px;
-}
-
-.panel-body #newsLeft2{
-    height: 460px;
-}
-
-
-.panel-body #newsLeft2 .ui-datalist-item{
-    padding-right: 10px;
-    margin-bottom: 10px;
-}
-
-.panel-body #newsLeft2 ul li{list-style: none;border-bottom: none;}*/
-/*
-.carousel-inner div.item img{
-    width: 100%;
-    height: 270px;
+.carousel{
+    height: 70%
 }
 
 .carousel .carousel-control{
@@ -173,92 +120,7 @@ input.orderProp{
 }
 
 .carousel .carousel-indicators{             
-    bottom: 0px;
-}
-
-#quickChannel{
-    position: relative;
-    overflow: hidden;
-    height: 195px;
-}
-
-#quickChannel a.control{
-    display: block;
-    margin-top: 40px; 
-    height: 90px;
-    width: 50px;   
-}
-
-#quickChannel a.toPrev{
-    float: left;
-    background-image:url('../img/background.png');
-    background-position: -408px -1px;
-}
-
-#quickChannel a.toNext{
-    float: right;
-    background-image:url('../img/background.png');
-    background-position: -468px -1px;
-}
-
-#footerNav{
-    width: 980px;
-    height: 36px;
-    font-size:14px;
-        color: #0288AB;
-    text-align: center;
-    padding-top: 15px; 
-    margin: auto;
-}
-
-#footerNav ul{
-    margin-left: 185px;
-    text-align: center;
-}
-
-#footerNav ul li{
-    float: left;
-}
-
-#footerNav ul li.footerMemu{
-    width: 80px;
-}*/
-
-
-.panel-title span{
-    display: inline-block;
-}
-
-.panel-title span.title{
-    min-width: 160px;    
-}
-
-.panel-title small{
-    padding-left: 20px;
-}
-
-.panel-body .pic{
-    float: left;
-    background-color: transparent;
-}
-
-.panel-body .pic img{
-    width: 72px;
-    height: 72px;  
-}
-
-.panel-body .text{
-    margin-left: 80px;
-}
-
-.panel-body p{
-    padding: 5px 10px 0px 15px;
-}
-
-.panel-body p span.title{
-    position: relative;
-    display: inline-block;
-    width: 80px;
+    bottom: 2px;
 }
 
 .content-rank-stars{

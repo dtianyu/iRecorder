@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-7 left"> 
+            <div class="row">
+                <div class="col-md-4 panel-title">
+                    <h4>             
+                        <span class="title">
+                            <strong>{{user.name}}</strong>                                    
+                        </span>                  
+                    </h4>
+                    <h6>
+                        <!--                        <span class="content-rank-stars content-stars-{{user.hot}}"></span>
+                                                <small>人均消费：<strong>{{shop.rjxf}}</strong>元</small>-->
+                    </h6>
+                    <h6>
+                        <!--地址：{{shop.address}}-->
+                    </h6>
+                </div>
+
+                <div class="col-md-8">
+                    <h4><strong class="text-primary">搜索 </strong><input class="searchBar"  ng-model="query"/></h4>
+                </div>
+            </div>           
+            <ul>
+                <li ng-repeat="item in books| filter:query ">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">
+                                <span class="title">
+                                    <a><strong>{{item.name}}</strong></a>                                    
+                                </span>
+                                <span class="content-rank-stars content-stars-{{item.id}}"></span>
+                            </h6>
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li ng-repeat="content in item.contents">
+                                    <div class="pic">
+                                        <!--<img ng-src="{{book.images[0]}}"/>-->
+                                    </div>
+                                    <div class="text">
+                                        <p><span class="title">价格:</span><strong>{{content.content}}</strong>
+                                            <!--<button type="button" class="btn btn-primary btn-xs cart-add" ng-click="addToCart(content)">我要</button>-->
+                                        </p>                    
+                                        <p><span class="title">ISBN:</span>{{content.ISBN}}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-5 right"> 
+            <div class="nav  nav-pills">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" 
+                            data-target="#cart-detail">
+                        <span class="sr-only">切换导航</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand cartLogo"></a>     
+                    <a class="navbar-brand" href="#/cart/{{book.id}}">我的菜单<span class="badge"></span></a>
+                </div>
+                <div id ="cart-detail" class="navbar-toggle">
+                    <ul class="nav nav-pills nav-stacked">
+<!--                        <li class="active"><button type="button" class="btn  btn-xs cart-clear" ng-disabled="isCartEmpty()" ng-click="clearCart()">重新点</button><a>菜单明细</a></li>
+                        <li ng-repeat="item in cartItems">
+                            <button type="button" class="btn btn-primary btn-xs cart-del" ng-click="delFromCart(item)">删除</button>                                    
+                            <h5>{{item.name}} {{item.price}}元<span class="cart-qty">
+                                    <a class="less" ng-click="decreaseCartQty(item)">-</a>
+                                    <span class="badge">{{item.qty}}{{item.unit}}</span>
+                                    <a class="more" ng-click="increaseCartQty(item)">+</a>
+                                </span>
+                            </h5>                            
+                        </li>
+                        <li class="active">
+                            <button type="button" class="btn btn-success btn-xs cart-submit" ng-disabled="isCartEmpty()" ng-click="submitCart()">快送来</button>
+                            <a>共{{totalAmts| currency}}元</a>
+                        </li>-->
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

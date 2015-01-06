@@ -9,5 +9,6 @@ var app = angular.module('recorderApp', ['recorderService','ngCookies']).
                 $routeProvider.
                         when('/login', {templateUrl: 'login.html', controller: UserController}).
                         when('/space/:userId', {templateUrl: 'partials/space.html', controller: UserController}).
+                        when('/book/:bookId', {templateUrl: 'partials/book.html', controller: BookController}).
                         otherwise({redirectTo: 'login'});
             }]);
