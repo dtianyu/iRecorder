@@ -1,4 +1,5 @@
-[
+{
+    "detail":[
     {
         "id": "西游记",
         "name": "西游记",
@@ -7,6 +8,13 @@
         "catelog": "4",
         "hot": 10,
         "contents": [
+            {
+                "title": "第一章",
+                "content": "悟空出世",
+                "remarks": [
+                ],
+                "dateread": "2014/12/1"
+            },
             {
                 "title": "",
                 "content": "123456",
@@ -72,3 +80,4 @@
         ]
     }
 ]
+}

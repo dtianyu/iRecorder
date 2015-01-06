@@ -9,6 +9,6 @@ angular.module('recorderService', ['ngResource']).
         factory('Space', function ($resource) {
             return $resource("app/users/:userId.json");
         }).factory('Book', function ($resource) {
-            return $resource("app/books/:bookId.books.json");
+            return $resource("app/books/books:userId.json");
         })
         ;

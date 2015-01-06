@@ -5,7 +5,8 @@
  */
 
 
-function UserController($scope, $routeParams, $http, $location, $cookieStore, Space) {
+var UserController=['$scope', '$routeParams', '$http', '$location', '$cookieStore', 'Space',
+    function($scope, $routeParams, $http, $location, $cookieStore, Space) {
 
     var key_cookie = "cn.lightshell.recorder.auth";
     var url_login = "http://recorder.myeer.cn:8480/RESTWebService/webresources/irecorder.entity.sysuser/";
@@ -13,7 +14,6 @@ function UserController($scope, $routeParams, $http, $location, $cookieStore, Sp
     $scope.pwd;
     $scope.user = $cookieStore.get(key_cookie);
     $scope.space;
-
     if (($scope.user === undefined) || ($scope.user === null)) {
         $location.path("/login");
     }
@@ -39,8 +39,7 @@ function UserController($scope, $routeParams, $http, $location, $cookieStore, Sp
                     alert("登录失败，请重试！");
                 });
     };
-};
-
+}];
 //    function securityMD5() {
 //
 //        alert('123');
@@ -48,28 +47,23 @@ function UserController($scope, $routeParams, $http, $location, $cookieStore, Sp
 ////        return $(md5(value));
 //    }
 //    ;
-UserController.$inject = ['$scope', '$routeParams', '$http', '$location', '$cookieStore', 'Space'];
 
-function BookController($scope, $routeParams, $cookieStore, Book) {
+var BookController = ['$scope', '$routeParams', '$cookieStore', 'Book',
+    function ($scope, $routeParams, $cookieStore, Book) {
 
-    var key_cookie = "cn.lightshell.recorder.auth";
-    $scope.user = $cookieStore.get(key_cookie);
-    $scope.space;
-  
-    if (($scope.user === undefined) || ($scope.user === null)) {
-        $location.path("/login");
-    }
-    
-    if (($routeParams.userId !== undefined) && ($routeParams.userId !== $scope.user.id.toString())) {
-        $location.path("/login");
-    }
+        var key_cookie = "cn.lightshell.recorder.auth";
+        $scope.user = $cookieStore.get(key_cookie);
+        $scope.books;
+        if (($scope.user === undefined) || ($scope.user === null)) {
+            $location.path("/login");
+        }
 
-    if (($routeParams.userId !== undefined) && ($routeParams.userId !== null)) {
-        $scope.books = Book.get({userId: $routeParams.userId});
-    }  
-     $scope.books = Book.get({bookId: $routeParams.bookId});
-};
-BookController.$inject = ['$scope', '$routeParams', '$cookieStore', 'Book'];
+        if (($routeParams.bookId !== undefined) && ($routeParams.bookId !== $scope.user.id.toString())) {
+            $location.path("/login");
+        }
 
+        if (($routeParams.userId !== undefined) && ($routeParams.userId !== null)) {
+            $scope.books = Book.get({userId: $routeParams.userId});
+        }
 
-
+    }];

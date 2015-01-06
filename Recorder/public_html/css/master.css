@@ -29,6 +29,14 @@ li{
     padding-top: 3px;    
 }
 
+.left{
+    float: left;
+}
+
+.right{
+    float: right;
+}
+
 .searchBar{
     width: 75%;
 }
