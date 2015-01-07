@@ -9,7 +9,7 @@ var UserController=['$scope', '$routeParams', '$http', '$location', '$cookieStor
     function($scope, $routeParams, $http, $location, $cookieStore, Space) {
 
     var key_cookie = "cn.lightshell.recorder.auth";
-    var url_login = "http://recorder.myeer.cn:8480/RESTWebService/webresources/irecorder.entity.sysuser/";
+    var url_login = "http://ar.hanbell.com.cn:8480/RESTWebService/webresources/irecorder.entity.sysuser/";
     $scope.userid;
     $scope.pwd;
     $scope.user = $cookieStore.get(key_cookie);

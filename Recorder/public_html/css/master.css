@@ -2,6 +2,10 @@
     padding: 0px;  
 }
 
+#topInfo{
+    height: 30px;
+}
+
 #topAdv{
     /*    position: relative;
         z-index: 999;
@@ -40,14 +44,14 @@ li{
 .searchBar{
     width: 75%;
 }
-
+/*
 #cart-detail{
     width: 100%;
 }
 
 .cart-go{
     margin-top: -10px;
-    /* width: 50px; */
+     width: 50px; 
     float: right;
 }
 
@@ -99,11 +103,7 @@ li{
 input.orderProp{
     margin-left: 5px;
     margin-right: 5px;
-}
-
-.carousel{
-    height: 70%
-}
+}*/
 
 .carousel .carousel-control{
     display: block;
@@ -168,10 +168,4 @@ input.orderProp{
 
 .nav-pills .navbar-toggle .icon-bar {
     background-color: #dd4814;
-}
-
-.cartLogo{
-    background-image: url('../img/cart.png');
-    background-repeat: no-repeat;
-    margin-top: 14px;
 }
