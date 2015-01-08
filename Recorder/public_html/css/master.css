@@ -33,6 +33,14 @@ li{
     padding-top: 3px;    
 }
 
+.display{
+    display: block;
+}
+
+.nondisplay{
+    display: none;
+}
+
 .left{
     float: left;
 }
@@ -42,7 +50,7 @@ li{
 }
 
 .searchBar{
-    width: 75%;
+    width: 100%;
 }
 /*
 #cart-detail{

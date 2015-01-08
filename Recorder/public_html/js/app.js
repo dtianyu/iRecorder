@@ -4,11 +4,33 @@
  * and open the template in the editor.
  */
 
-var app = angular.module('recorderApp', ['recorderService','ngCookies']).
+var app = angular.module('recorderApp', ['recorderService', 'ngCookies']).
         config(['$routeProvider', function ($routeProvider) {
                 $routeProvider.
-                        when('/login', {templateUrl:'login.html', controller: UserController}).
-                        when('/space/:userId', {templateUrl: 'partials/space.html', controller: UserController}).
+                        when('/login', {templateUrl: 'login.html', controller: AuthController}).
+                        when('/space', {templateUrl: 'partials/space.html', controller: SpaceController}).
                         when('/book/:userId', {templateUrl: 'partials/book.html', controller: BookController}).
                         otherwise({redirectTo: 'login'});
             }]);
+        
+//var app = angular.module('recorderApp', ['recorderService', 'ngCookies']).
+//        config(['$routeProvider', function ($routeProvider) {
+//                $routeProvider.
+//                        when('/login', {templateUrl: 'login.html', controller: UserController}).
+//                        when('/space/:userId', {templateUrl: 'partials/space.html', controller: UserController}).
+//                        when('/book/:userId', {templateUrl: 'partials/book.html', controller: BookController}).
+//                        otherwise({redirectTo: 'login'});
+//            }]).
+//        config(['$httpProvider', function ($httpProvider) {
+//                $httpProvider.responseInterceptors.push(
+//                        'securityInterceptor');
+//            }]);
+//
+//function myInterceptor(promise) {
+//    return promise.then(function (response) {
+//        if (response.headers()['content-type'] === "text/plain") {
+//            response.data = $sanitize(response.data);
+//        };
+//        return response;
+//    });
+//}

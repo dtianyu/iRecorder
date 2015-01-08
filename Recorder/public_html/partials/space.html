@@ -1,69 +1,67 @@
 <div class="container">
     <div class="row">
-        <div class="col-lg-9 col-md-8 col-sm-7 left"> 
-            <div class="row">
-                <div class="col-md-4 panel-title">
-                    <h4>             
-                        <span class="title text-primary">
-                            <strong>{{user.username}}</strong>                                
-                        </span>                  
-                    </h4>
-                    <h6>                      
-                        <span><strong>年级:{{user.grade}}</strong></span><small>班级:{{user.class}}</small>
-                        <span class="content-rank-stars content-stars-{{user.level}}"></span>
-                    </h6>
-                    <h6>
-                        学校：{{user.school}}
+        <div class="col-lg-10 col-md-9 col-sm-8 left"> 
+            <h4><strong class="text-primary">搜索 </strong><input class="searchBar"  ng-model="query"/></h4>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span class="title">知识点</span>
                     </h6>
                 </div>
-
-                <div class="col-md-8">
-                    <h4><strong class="text-primary">搜索 </strong><input class="searchBar"  ng-model="query"/></h4>
-                </div>
-            </div>           
-            <ul>
-                <li ng-repeat="book in space.books| filter:query ">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">
-                                <span class="title">
-                                    <a><strong>{{book.name}}</strong></a>                                    
-                                </span>
-                                <span class="title">
-                                    <a><strong>{{book.author}}</strong></a>                                    
-                                </span>
-                                <span class="content-rank-stars content-stars-{{book.hot}}"></span>
-                            </h6>
-                        </div>
-                        <div class="panel-body">
-                            <p><span class="title">读后感:</span><strong>{{book.remark}}</strong></p>                    
-                            <h4><a href="#/book/{{user.id}}" class="cart-go label label-primary">继续读</a></h4>
-                        </div>
+                <div class="panel-body">
+                    <div>
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <input id="title" type="text" class="form-control" placeholder="标题" ng-model="knowledgeTitle" required="true"/>    
+                                    <input id="content" type="text" class="form-control" placeholder="内容" ng-model="knowledgeContent" required="true"/>                             
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="submit" class="btn btn-success btn-sm" ng-click="addKnowledge()" ng-disabled="authorized">添加</button>  
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </li>
-            </ul>
+                    <ul>
+                        <li ng-repeat="k in knowledges| filter:query ">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">
+                                        <span class="title">
+                                            <a><strong>{{k.title}}</strong></a>                                    
+                                        </span>
+                                    </h6>
+                                </div>
+                                <div class="panel-body">
+                                    <p>{{k.content}}</p>                    
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-3 col-md-4 col-sm-5 right"> 
+        <div class="col-lg-2 col-md-3 col-sm-4 right"> 
             <div class="nav  nav-pills">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" 
-                            data-target="#cart-detail">
-                        <span class="sr-only">切换导航</span>
+                            data-target="#nav-detail">
+                        <span class="sr-only">快速导航</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand cartLogo"></a>     
-                    <a class="navbar-brand" href="#/cart/{{space.id}}">我的计划<span class="badge"></span></a>
+                    <!--<a class="navbar-brand cartLogo"></a>-->     
+                    <a class="navbar-brand" href="#/cart/{{space.id}}"><span class="badge"></span></a>
                 </div>
-                <div id ="cart-detail" class="navbar-toggle">
+                <div id ="nav-detail" class="navbar-toggle">
                     <ul class="nav nav-pills nav-stacked">
                         <li class="active"><a>Home</a></li>
                         <li>                                 
-                            <a href="#/book/{{user.id}}">我要阅读</a>                      
+                            <a href="#/book/{{openId}}">我要阅读</a>                      
                         </li>
                         <li>                                 
-                            <a href="#/book/{{user.id}}">我要看书</a>                         
+                            <a href="#/book/{{openId}}">我要看书</a>                         
                         </li>
                         <li>                           
                             <a>自助服务</a>
