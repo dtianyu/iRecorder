@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-10 col-md-9 col-sm-8 left"> 
-            <h4><strong class="text-primary">搜索 </strong><input class="searchBar"  ng-model="query"/></h4>
+            <h4><strong class="text-primary">搜索</strong> <input class="searchBar"  ng-model="query"/></h4>
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h6 class="panel-title">
@@ -13,11 +13,11 @@
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <div class="col-sm-10">
-                                    <input id="title" type="text" class="form-control" placeholder="标题" ng-model="knowledgeTitle" required="true"/>    
-                                    <input id="content" type="text" class="form-control" placeholder="内容" ng-model="knowledgeContent" required="true"/>                             
+                                    <input id="title" type="text" class="form-control" placeholder="标题" ng-model="space.knowledgeTitle" required="true"/>    
+                                    <textarea id="content" rows="4" class="form-control" placeholder="内容"  ng-model="space.knowledgeContent" required="true"></textarea>                             
                                 </div>
                                 <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-success btn-sm" ng-click="addKnowledge()" ng-disabled="authorized">添加</button>  
+                                    <button type="button" class="btn btn-success btn-sm" ng-click="addKnowledge()" ng-disabled="!authorized">添加</button>  
                                 </div>
                             </div>
                         </form>

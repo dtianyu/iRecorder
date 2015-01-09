@@ -10,7 +10,7 @@ var app = angular.module('recorderApp', ['recorderService', 'ngCookies']).
                         when('/login', {templateUrl: 'login.html', controller: AuthController}).
                         when('/space', {templateUrl: 'partials/space.html', controller: SpaceController}).
                         when('/book/:userId', {templateUrl: 'partials/book.html', controller: BookController}).
-                        otherwise({redirectTo: 'login'});
+                        otherwise({redirectTo: 'space'});
             }]);
         
 //var app = angular.module('recorderApp', ['recorderService', 'ngCookies']).

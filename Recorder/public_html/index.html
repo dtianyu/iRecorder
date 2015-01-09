@@ -20,7 +20,7 @@ and open the template in the editor.
         <script src="js/controllers.js" ></script>
         <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
         <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>          
-        <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101183443" data-redirecturi="http://recorder.myeer.cn" charset="utf-8" ></script>
+        <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101183443" data-redirecturi="http://recorder.myeer.cn" charset="utf-8" data-callback="true"></script>
     </head>
     <body>
         <div id="top">
@@ -109,7 +109,7 @@ and open the template in the editor.
                                 //调用QC.Login方法，指定btnId参数将按钮绑定在容器节点中
                                 if (!QC.Login.check()) {
                                     $("#slideLogin").removeClass("nondisplay");
-                                } 
+                                }
                                 ;
                                 QC.Login({
                                     //btnId：插入按钮的节点id，必选
@@ -135,8 +135,9 @@ and open the template in the editor.
                                     }));
                                     $("#topInfo").removeClass("nondisplay");
                                 }, function (opts) {//注销成功  
-                                    $("#topInfo").addClass("nondisplay");
+                                    $("#topInfo").addClass("nondisplay");                                   
                                     alert('QQ登录 注销成功');
+                                    window.close();
                                 }
                                 );
                             </script>
