@@ -2,6 +2,16 @@
     padding: 0px;  
 }
 
+body{
+    background: url('../img/bg_sink.jpg') #222 no-repeat scroll top center;
+    min-height: 100%;
+}
+
+li{
+    list-style: none;
+    padding-top: 3px;    
+}
+
 #topInfo{
     height: 30px;
 }
@@ -28,11 +38,6 @@
     text-align: center;
 }
 
-li{
-    list-style: none;
-    padding-top: 3px;    
-}
-
 .display{
     display: block;
 }
@@ -50,8 +55,20 @@ li{
 }
 
 .searchBar{
-    width: 100%;
+    position: relative;
+    width: 94%;
 }
+
+.btn-qq-topic{
+    background-image: url("../img/Qzone_logo_icon_wiki.png");
+    background-repeat: no-repeat;
+}
+
+.btn-qq-topic-24{
+    background-position:  -159px 0px;
+    height: 24px;
+    width: 24px;
+}   
 /*
 #cart-detail{
     width: 100%;

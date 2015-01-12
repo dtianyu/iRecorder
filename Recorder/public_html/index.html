@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html ng-app="recorderApp">
     <head>
-        <title>TODO supply a title</title>
+        <title>每天记录一点点，每天进步一点点</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="qc:admins" content="157050325372452651552636" />
@@ -20,7 +20,7 @@ and open the template in the editor.
         <script src="js/controllers.js" ></script>
         <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
         <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>          
-        <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101183443" data-redirecturi="http://recorder.myeer.cn" charset="utf-8" data-callback="true"></script>
+        <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101183443" data-redirecturi="http://recorder.myeer.cn" charset="utf-8" ></script>
     </head>
     <body>
         <div id="top">
@@ -42,7 +42,7 @@ and open the template in the editor.
         </div> 
         <div id="slideLogin" class="container nondisplay">
             <div class="row">
-                <div class="col-md-8 col-sm-6">
+                <div class="col-lg-8 col-md-8 col-sm-6">
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
                         <!-- 轮播（Carousel）指标 -->
                         <ol class="carousel-indicators">
@@ -77,7 +77,7 @@ and open the template in the editor.
                            data-slide="next">&rsaquo;</a>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
+                <div class="col-lg-4 col-md-4 col-sm-6">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">               
                             <div class="col-sm-offset-2 col-sm-10">
@@ -134,10 +134,14 @@ and open the template in the editor.
                                         figureurl: reqData.figureurl
                                     }));
                                     $("#topInfo").removeClass("nondisplay");
-                                }, function (opts) {//注销成功  
-                                    $("#topInfo").addClass("nondisplay");                                   
-                                    alert('QQ登录 注销成功');
+                                    if (window.opener && !window.opener.closed) {
+                                        window.opener.location.reload();
+                                    }; 
                                     window.close();
+                                }, function (opts) {//注销成功  
+                                    $("#topInfo").addClass("nondisplay");
+                                    alert('QQ登录 注销成功');
+                                    window.location.reload()();
                                 }
                                 );
                             </script>

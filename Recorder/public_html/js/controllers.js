@@ -61,14 +61,11 @@ var SpaceController = ['$scope', '$http', '$location',
             if ($scope.space.knowledgeTitle === undefined || $scope.space.knowledgeContent === undefined) {
                 return;
             }
-            var myDate = new Date();
-            var date = myDate.getFullYear().toString() + '-' + myDate.getDate().toString() + '-' + myDate.getUTCDay() + 'T' + myDate.getUTCHours() + ':' + myDate.getUTCMinutes() + ':' + myDate.getUTCSeconds()+'+08:00';
-            alert(date);
             var k = {"userid": $scope.space.openId, "title": $scope.space.knowledgeTitle, "content": $scope.space.knowledgeContent};
             $http.post(url_knowledge, k)
                     .success(function () {
-                        $scope.knowledgeTitle = "";
-                        $scope.knowledgeContent = "";
+                        $scope.space.knowledgeTitle = "";
+                        $scope.space.knowledgeContent = "";
                         getKnowledge();
                         alert("提交成功！");
 
@@ -79,7 +76,7 @@ var SpaceController = ['$scope', '$http', '$location',
         };
 
         var getKnowledge = function () {
-//            alert('begin get');
+            //alert($scope.space.openId);
             if ($scope.space.openId === undefined) {
                 return;
             }
@@ -95,7 +92,24 @@ var SpaceController = ['$scope', '$http', '$location',
                     });
         };
 
+        $scope.shareKnowledgeToQQSpace = function (content) {
+            if ($scope.space.accessToken === undefined || $scope.space.openId === undefined || content === undefined) {
+                return;
+            }
+            var url_qq_topic = "https://graph.qq.com/shuoshuo/add_topic";
+            var url_qq_topic_params = "oauth_consumer_key=101183443&access_token=" + $scope.space.accessToken + "&openid=" + $scope.space.openId + "&format=json&con=" + content + "";
+            alert(url_qq_params);
+            $http.post(url_qq_topic+"?"+url_qq_topic_params).
+                    success(function () {
+                        alert("分享成功！");
+                    })
+                    .error(function () {
+                        alert("分享失败，请重试！");
+                    });
+        };
+
         $scope.$watch('space.openId', getKnowledge);
+
 
     }];
 

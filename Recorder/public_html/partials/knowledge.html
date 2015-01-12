@@ -30,7 +30,6 @@
                                         <span class="title">
                                             <a><strong>{{k.title}}</strong></a>                                    
                                         </span>
-                                        <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareKnowledgeToQQSpace(k.content)"></button>
                                     </h6>
                                 </div>
                                 <div class="panel-body">
@@ -40,15 +39,47 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div>           
+            <ul>
+                <li ng-repeat="item in books.detail| filter:query">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">
+                                <span class="title">
+                                    <a><strong>{{item.name}}</strong></a>                                    
+                                </span>
+                                <button type="button" class="btn btn-primary btn-xs right">添加</button>
+                                <!--<span class="content-rank-stars content-stars-{{item.id}}"></span>-->
+                            </h6>
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li ng-repeat="content in item.contents">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h6 class="panel-title">
+                                                {{content.title}}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>{{content.content}}</p>                    
+                                        <p><span class="title">ISBN:</span>{{content.ISBN}}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <div class="col-md-2 col-sm-4 "> 
+        <div class="col-md-2 col-sm-4"> 
             <div class="nav  nav-pills">
                 <div class="navbar-header">
                 </div>
                 <div id ="nav-detail" class="navbar-toggle">
                     <ul class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="#/space/">Home</a></li>
+                        <li class="active"><a href="#/space/" class="text-center">Home</a></li>
                         <li>                                 
                             <a href="#/knowledge/{{openId}}">我要记录</a>                      
                         </li>
@@ -63,4 +94,3 @@
             </div>
         </div>
     </div>
-</div>
