@@ -1,68 +1,66 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-sm-8"> 
-            <h4><strong class="text-primary">搜索</strong> <input class="searchBar"  ng-model="query"/></h4>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">
-                                <span class="title">爱点滴</span>
-                                 <button type="button" class="btn btn-xs btn-success right" ng-click="findMore('knowledge')">..More</button> 
-                            </h6>  
-                        </div>
-                        <div class="panel-body">
-                            <ul>
-                                <li ng-repeat="k in space.knowledges| filter:query ">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h6 class="panel-title">
-                                                <span class="title">
-                                                    <a><strong>{{k.title}}</strong></a>                                    
-                                                </span>
-                                                <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareToQQSpace(k.content)"></button>
-                                            </h6>
-                                        </div>
-                                        <div class="panel-body">
-                                            <p>{{k.content}}</p>                    
-                                        </div>
+
+<div class="row">
+    <div class="col-md-10 col-sm-8"> 
+        <h4><strong class="text-primary">搜索</strong> <input class="searchBar"  ng-model="query"/></h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">
+                            <span class="title">爱点滴</span>
+                            <button type="button" class="btn btn-xs btn-success right" ng-click="findMore('knowledge')">..More</button> 
+                        </h6>  
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="k in space.knowledges| filter:query ">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">
+                                            <span class="title">
+                                                <a><strong>{{k.title}}</strong></a>                                    
+                                            </span>
+                                            <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareToQQSpace(k.content)"></button>
+                                        </h6>
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
+                                    <div class="panel-body">
+                                        <p>{{k.content}}</p>                    
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">
-                                <span class="title">爱阅读</span>
-                                 <button type="button" class="btn btn-xs btn-success right" ng-click="findMore('book')">..More</button> 
-                            </h6>
-                        </div>
-                        <div class="panel-body">                
-                            <ul>
-                                <li ng-repeat="k in space.knowledges| filter:query ">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h6 class="panel-title">
-                                                <span class="title">
-                                                    <a><strong>{{k.title}}</strong></a>                                    
-                                                </span>
-                                                <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareKnowledgeToQQSpace(k.content)"></button>
-                                            </h6>
-                                        </div>
-                                        <div class="panel-body">
-                                            <p>{{k.content}}</p>                    
-                                        </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">
+                            <span class="title">爱阅读</span>
+                            <button type="button" class="btn btn-xs btn-success right" ng-click="findMore('book')">..More</button> 
+                        </h6>
+                    </div>
+                    <div class="panel-body">                
+                        <ul>
+                            <li ng-repeat="k in space.knowledges| filter:query ">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">
+                                            <span class="title">
+                                                <a><strong>{{k.title}}</strong></a>                                    
+                                            </span>
+                                            <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareKnowledgeToQQSpace(k.content)"></button>
+                                        </h6>
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
+                                    <div class="panel-body">
+                                        <p>{{k.content}}</p>                    
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
