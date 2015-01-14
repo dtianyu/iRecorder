@@ -1,96 +1,74 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-10 col-sm-8"> 
-            <h4><strong class="text-primary">搜索</strong> <input class="searchBar"  ng-model="query"/></h4>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h6 class="panel-title">
-                        <span class="title">知识点</span>
-                    </h6>
-                </div>
-                <div class="panel-body">
-                    <div>
-                        <form class="form-horizontal" role="form" ng-submit="addKnowledge()">
-                            <div class="form-group">
-                                <div class="col-sm-10">
-                                    <input id="title" type="text" class="form-control" placeholder="标题" ng-model="space.knowledgeTitle" required="true"/>    
-                                    <textarea id="content" rows="4" class="form-control" placeholder="内容"  ng-model="space.knowledgeContent" required="true"></textarea>                             
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-success btn-sm">添加</button>  
-                                </div>
-                            </div>
-                        </form>
+    <h4><strong class="text-primary">搜索</strong> <input class="searchBar"  ng-model="query"/></h4>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <span class="title">爱阅读</span>
+            </h6>
+        </div>
+        <div class="panel-body">
+            <div>
+                <form class="form-horizontal" role="form" ng-submit="addEntity()">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input id="title" type="text" class="form-control" placeholder="标题" ng-model="space.entityTitle" required="true"/>    
+                            <textarea id="content" rows="4" class="form-control" placeholder="内容"  ng-model="space.entityContent" required="true"></textarea>                             
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-success btn-sm">添加</button>  
+                        </div>
                     </div>
-                    <ul>
-                        <li ng-repeat="k in knowledges| filter:query ">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h6 class="panel-title">
-                                        <span class="title">
-                                            <a><strong>{{k.title}}</strong></a>                                    
-                                        </span>
-                                    </h6>
-                                </div>
-                                <div class="panel-body">
-                                    <p>{{k.content}}</p>                    
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>           
+                </form>
+            </div>
             <ul>
-                <li ng-repeat="item in books.detail| filter:query">
+                <li ng-repeat="o in space.entities| filter:query ">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h6 class="panel-title">
                                 <span class="title">
-                                    <a><strong>{{item.name}}</strong></a>                                    
+                                    <a><strong>{{o.title}}</strong></a>                                    
                                 </span>
-                                <button type="button" class="btn btn-primary btn-xs right">添加</button>
-                                <!--<span class="content-rank-stars content-stars-{{item.id}}"></span>-->
+                                <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareToQQSpace(o.content)"></button>
                             </h6>
                         </div>
                         <div class="panel-body">
-                            <ul>
-                                <li ng-repeat="content in item.contents">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h6 class="panel-title">
-                                                {{content.title}}
-                                            </h6>
-                                        </div>
-                                    </div>
-                                    <div class="panel-body">
-                                        <p>{{content.content}}</p>                    
-                                        <p><span class="title">ISBN:</span>{{content.ISBN}}</p>
-                                    </div>
-                                </li>
-                            </ul>
+                            <p>{{o.content}}</p>                    
                         </div>
                     </div>
                 </li>
             </ul>
         </div>
-        <div class="col-md-2 col-sm-4"> 
-            <div class="nav  nav-pills">
-                <div class="navbar-header">
+    </div>           
+    <ul>
+        <li ng-repeat="item in books.detail| filter:query">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span class="title">
+                            <a><strong>{{item.name}}</strong></a>                                    
+                        </span>
+                        <button type="button" class="btn btn-primary btn-xs right">添加</button>
+                        <!--<span class="content-rank-stars content-stars-{{item.id}}"></span>-->
+                    </h6>
                 </div>
-                <div id ="nav-detail" class="navbar-toggle">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li class="active"><a>快速导航</a></li>
-                        <li>                                 
-                            <a href="#/knowledge/{{openId}}">我要记录</a>                      
-                        </li>
-                        <li>                                 
-                            <a href="#/book/{{openId}}">我要看书</a>                         
-                        </li>
-                        <li>                           
-                            <a>自助服务</a>
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="content in item.contents">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">
+                                        {{content.title}}
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{content.content}}</p>                    
+                                <p><span class="title">ISBN:</span>{{content.ISBN}}</p>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
-    </div>
+        </li>
+    </ul>
+</div>
