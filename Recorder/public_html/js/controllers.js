@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 
+var getTimestamp = function () {
+    return Math.round(new Date().getTime() / 1000);
+};
+
 var shareContentToQQSpace = function (accessToken, openId, content) {
     if (accessToken === undefined || openId === undefined || content === undefined) {
         return;
@@ -20,41 +24,19 @@ var shareContentToQQSpace = function (accessToken, openId, content) {
             });
 };
 
+var AuthController = ['$scope', '$location',
+    function ($scope, $location) {
 
-
-var AuthController = ['$scope', '$http', '$location',
-    function ($scope, $http, $location) {
-
-        $scope.authorized = QC.Login.check();
-        //alert($scope.authorized);
+        $scope.authorized = false;
         if (QC.Login.check()) {
+            $scope.authorized = true;
             $location.path("/space");
         }
 
-//        var url_login = "http://ar.hanbell.com.cn:8480/RESTWebService/webresources/irecorder.entity.sysuser/";
-//        $scope.userid;
-//        $scope.pwd;
-// $scope.user;
-//        $scope.login = function () {
-//            url_login = url_login + $scope.userid + "-" + $scope.pwd;
-//            $http.get(url_login)
-//                    .success(function (response)
-//                    {
-//                        $scope.user = response;
-//                        
-//                        $location.path("/space/" + $scope.user.id);
-//                    })
-//                    .error(function () {
-//                        alert("登录失败，请重试！");
-//                    });
-//        };
-
-
-
     }];
 
-var SpaceController = ['$scope', '$http', '$location',
-    function ($scope, $http, $location) {
+var SpaceController = ['$scope', '$routeParams', '$http', '$location',
+    function ($scope, $routeParams, $http, $location) {
         $scope.authorized = false;
         if (!QC.Login.check()) {
             $location.path("/login");
@@ -68,23 +50,20 @@ var SpaceController = ['$scope', '$http', '$location',
 
         $scope.space = {};
         $scope.space.knowledges;
+        $scope.space.openId;
 
         $scope.findMore = function (path) {
-            alert('');
             $location.path(path);
         };
 
-        QC.Login.getMe(function (openId, accessToken) {
-            $scope.space.openId = openId;
-            $scope.space.accessToken = accessToken;
-        });
+        $scope.getTimestamp = getTimestamp;
 
-        var getKnowledge = function () {
+        var getKnowledges = function () {
             //alert($scope.space.openId);
             if ($scope.space.openId === undefined) {
                 return;
             }
-            get_knowledge = url_knowledge + '/userid/' + $scope.space.openId;
+            get_knowledge = url_knowledge + '/userid/' + $scope.space.openId + "/top/5";
             $http.get(get_knowledge).
                     success(function (response)
                     {
@@ -92,7 +71,7 @@ var SpaceController = ['$scope', '$http', '$location',
                     })
                     .error(function () {
                         $scope.space.knowledges = [];
-                        alert("暂时没有知识记录，赶快添加哦！");
+                        alert("暂时没有爱点滴，赶快添加哦！");
                     });
         };
 
@@ -100,14 +79,21 @@ var SpaceController = ['$scope', '$http', '$location',
             shareContentToQQSpace($scope.space.accessToken
                     , $scope.space.openId, content);
         };
-        
-        $scope.$watch('space.openId', getKnowledge);
+
+        QC.Login.getMe(function (openId, accessToken) {
+            $scope.space.openId = openId;
+            $scope.space.accessToken = accessToken;
+            getKnowledges();
+        });
+
+        $scope.$watch('space.openId', getKnowledges);
 
 
     }];
 
-var KnowledgeController = ['$scope', '$http', '$location',
-    function ($scope, $http, $location) {
+var KnowledgeController = ['$scope', '$routeParams', '$http', '$location',
+    function ($scope, $routeParams, $http, $location) {
+
         $scope.authorized = false;
         if (!QC.Login.check()) {
             $location.path("/login");
@@ -120,25 +106,20 @@ var KnowledgeController = ['$scope', '$http', '$location',
         var get_knowledge;
 
         $scope.space = {};
-        $scope.space.knowledges;
-        $scope.space.knowledgeTitle = '';
-        $scope.space.knowledgeContent = '';
+        $scope.space.entities;
+        $scope.space.entityTitle = '';
+        $scope.space.entityContent = '';
 
-        QC.Login.getMe(function (openId, accessToken) {
-            $scope.space.openId = openId;
-            $scope.space.accessToken = accessToken;
-        });
-
-        $scope.addKnowledge = function () {
-            if ($scope.space.knowledgeTitle === undefined || $scope.space.knowledgeContent === undefined) {
+        $scope.addEntity = function () {
+            if ($scope.space.entityTitle === undefined || $scope.space.entityContent === undefined) {
                 return;
             }
-            var entity = {"userid": $scope.space.openId, "title": $scope.space.knowledgeTitle, "content": $scope.space.knowledgeContent};
+            var entity = {"userid": $scope.space.openId, "title": $scope.space.entityTitle, "content": $scope.space.entityContent};
             $http.post(url_knowledge, entity)
                     .success(function () {
-                        $scope.space.knowledgeTitle = "";
-                        $scope.space.knowledgeContent = "";
-                        getKnowledge();
+                        $scope.space.entityTitle = "";
+                        $scope.space.entityContent = "";
+                        getEntityList();
                         alert("提交成功！");
 
                     })
@@ -147,7 +128,27 @@ var KnowledgeController = ['$scope', '$http', '$location',
                     });
         };
 
-        var getKnowledge = function () {
+        $scope.deleteEntity = function (id) {
+            if (id === undefined) {
+                return;
+            }
+            var del_url= url_knowledge+'/'+id;
+            $http({method:'DELETE',url:del_url})
+                    .success(function () {
+                        $scope.space.entityTitle = "";
+                        $scope.space.entityContent = "";
+                        getEntityList();
+                        alert("提交成功！");
+
+                    })
+                    .error(function () {
+                        alert("提交失败，请重试！");
+                    });
+        };
+
+        $scope.getTimestamp = getTimestamp;
+
+        var getEntityList = function () {
             //alert($scope.space.openId);
             if ($scope.space.openId === undefined) {
                 return;
@@ -156,10 +157,10 @@ var KnowledgeController = ['$scope', '$http', '$location',
             $http.get(get_knowledge).
                     success(function (response)
                     {
-                        $scope.space.knowledges = response;
+                        $scope.space.entities = response;
                     })
                     .error(function () {
-                        $scope.space.knowledges = [];
+                        $scope.space.entities = [];
                         alert("暂时没有记录，赶快添加哦！");
                     });
         };
@@ -169,12 +170,23 @@ var KnowledgeController = ['$scope', '$http', '$location',
                     , $scope.space.openId, content);
         };
 
-        $scope.$watch('space.openId', getKnowledge);
+//        if ($routeParams.userId !== undefined && $routeParams.userId !== "") {
+//            $scope.space.openId = $routeParams.userId;
+//            getEntityList();
+//        }
+
+        $scope.$watch('space.openId', getEntityList);
+
+        QC.Login.getMe(function (openId, accessToken) {
+            $scope.space.openId = openId;
+            $scope.space.accessToken = accessToken;
+        });
+
 
     }];
 
-var BookController = ['$scope', '$routeParams', '$cookieStore', 'Book',
-   function ($scope, $http, $location,Book) {
+var BookController = ['$scope', '$routeParams', '$http', '$location',
+    function ($scope, $routeParams, $http, $location) {
         $scope.authorized = false;
         if (!QC.Login.check()) {
             $location.path("/login");
@@ -191,11 +203,6 @@ var BookController = ['$scope', '$routeParams', '$cookieStore', 'Book',
         $scope.space.entityTitle = '';
         $scope.space.entityContent = '';
 
-        QC.Login.getMe(function (openId, accessToken) {
-            $scope.space.openId = openId;
-            $scope.space.accessToken = accessToken;
-        });
-
         $scope.addEntity = function () {
             if ($scope.space.entityTitle === undefined || $scope.space.entityContent === undefined) {
                 return;
@@ -207,12 +214,13 @@ var BookController = ['$scope', '$routeParams', '$cookieStore', 'Book',
                         $scope.space.entityContent = "";
                         getEntityList();
                         alert("提交成功！");
-
                     })
                     .error(function () {
                         alert("提交失败，请重试！");
                     });
         };
+
+        $scope.getTimestamp = getTimestamp;
 
         var getEntityList = function () {
             //alert($scope.space.openId);
@@ -236,6 +244,16 @@ var BookController = ['$scope', '$routeParams', '$cookieStore', 'Book',
                     , $scope.space.openId, content);
         };
 
+//        if ($routeParams.userId !== undefined && $routeParams.userId !== "") {
+//            $scope.space.openId = $routeParams.userId;
+//            getEntityList();
+//        }
+
         $scope.$watch('space.openId', getEntityList);
+
+        QC.Login.getMe(function (openId, accessToken) {
+            $scope.space.openId = openId;
+            $scope.space.accessToken = accessToken;
+        });
 
     }];
