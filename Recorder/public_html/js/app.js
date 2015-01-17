@@ -4,14 +4,15 @@
  * and open the template in the editor.
  */
 
-var app = angular.module('recorderApp', ['recorderService', 'ngCookies']).
-        config(['$routeProvider', function ($routeProvider) {
+var app = angular.module('recorderApp', ['recorderService', 'ngCookies']);
+
+app.config(['$routeProvider', function ($routeProvider) {
                 $routeProvider.
                         when('/login', {templateUrl: 'login.html', controller: AuthController}).
                         when('/space', {templateUrl: 'partials/space.html', controller: SpaceController}).
                         when('/knowledge', {templateUrl: 'partials/knowledge.html', controller: KnowledgeController}).
                         when('/book', {templateUrl: 'partials/book.html', controller: BookController}).
-                        otherwise({redirectTo: 'space'});
+                        otherwise({redirectTo: 'login'});
             }]);
         
 //var app = angular.module('recorderApp', ['recorderService', 'ngCookies']).

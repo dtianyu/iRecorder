@@ -20,7 +20,7 @@ and open the template in the editor.
         <script src="js/controllers.js" ></script>
         <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
         <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>          
-        <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101183443" data-redirecturi="http://recorder.myeer.cn" charset="utf-8" ></script>
+        <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101183443" data-redirecturi="http://recorder.myeer.cn" charset="utf-8" data-callback="true"></script>
     </head>
     <body>
         <div id="top">
@@ -150,7 +150,31 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-        <div id="container" class="container" ng-view></div>
+        <div class="container">
+            <div class="row">
+                <div id="container" class="col-md-10 col-sm-8" ng-view></div>
+                <div id="sideMenu" class="col-md-2 col-sm-4 nondisplay"> 
+                    <div class="nav  nav-pills">
+                        <div class="navbar-header">
+                        </div>
+                        <div id ="nav-detail" class="navbar-toggle">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li class="active"><a href="#/space">Home</a></li>
+                                <li>                                 
+                                    <a href="#/knowledge">爱学习</a>                      
+                                </li>
+                                <li>                                 
+                                    <a href="#/book">爱阅读</a>                         
+                                </li>
+                                <li>                           
+                                    <a>自助服务</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="bottom" class="container navbar-fixed-bottom"></div> 
     </body>
 </html>
