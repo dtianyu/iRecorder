@@ -11,12 +11,14 @@ recorderService.factory('Knowledge', ['$http', function ($http) {
         var base_url = "http://ar.hanbell.com.cn:8480/RESTWebService/webresources/irecorder.entity.knowledge";
         return {
             query: function (userId, $scope) {
-                var url = base_url + '/userid/' + userId;
-                return $http.get(url).success(function (response) {
-                    $scope.space.knowledges = response;
-                }).error(function () {
-                    alert("获取资料失败");
-                });
+                if (userId !== undefined && userId !== "") {
+                    var url = base_url + '/userid/' + userId;
+                    return $http.get(url).success(function (response) {
+                        $scope.space.knowledges = response;
+                    }).error(function () {
+                        alert("获取资料失败");
+                    });
+                }
             },
             delete: function (userId, Id) {
                 var url = base_url + '/userid/' + userId + '/id/' + Id;

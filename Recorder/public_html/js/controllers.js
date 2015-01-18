@@ -3,21 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function Asc(x, y)
-{
-    if (x > y)
-        return 1;
-    if (x < y)
-        return -1;
-}
-
-function Desc(x, y)
-{
-    if (x > y)
-        return -1;
-    if (x < y)
-        return 1;
-}
 
 var getTimestamp = function () {
     return Math.round(new Date().getTime() / 1000);
@@ -60,11 +45,7 @@ var AuthController = ['$scope', '$location',
         if (QC.Login.check()) {
             $scope.authorized = true;
             $location.path("/space");
-            QC.Login.getMe(function (openId, accessToken) {
-                setAuthentication(openId, accessToken);
-            });
         }
-
     }];
 
 var SpaceController = ['$scope', '$routeParams', '$http', '$location',
@@ -85,33 +66,19 @@ var SpaceController = ['$scope', '$routeParams', '$http', '$location',
 
         var getKnowledges = function () {
             //alert($scope.space.openId);
-            if ($scope.space.openId === undefined) {
-                return;
+            if ($scope.space.openId !== undefined && $scope.space.openId !== "") {
+                get_knowledge = url_knowledge + '/userid/' + $scope.space.openId + "/top/5";
+                $http.get(get_knowledge).
+                        success(function (response)
+                        {
+                            $scope.space.knowledges = response;
+                        })
+                        .error(function () {
+                            $scope.space.knowledges = [];
+                            alert("暂时没有内容，赶快添加哦！");
+                        });
             }
-            get_knowledge = url_knowledge + '/userid/' + $scope.space.openId + "/top/5";
-            $http.get(get_knowledge).
-                    success(function (response)
-                    {
-                        $scope.space.knowledges = response;
-                    })
-                    .error(function () {
-                        $scope.space.knowledges = [];
-                        alert("暂时没有爱点滴，赶快添加哦！");
-                    });
         };
-
-        var auth = getAuthentication();
-        if (auth.openId === "") {
-            QC.Login.getMe(function (openId, accessToken) {
-                $scope.space.openId = openId;
-                $scope.space.accessToken = accessToken;
-            });
-        }
-        else {
-            $scope.space.openId = auth.openId;
-            $scope.space.accessToken = auth.accessToken;
-            getKnowledges();
-        }
 
         $scope.findMore = function (path) {
             $location.path(path);
@@ -123,6 +90,19 @@ var SpaceController = ['$scope', '$routeParams', '$http', '$location',
             shareContentToQQSpace($scope.space.accessToken
                     , $scope.space.openId, content);
         };
+
+        var auth = getAuthentication();
+        if (auth.openId === "") {
+            QC.Login.getMe(function (openId, accessToken) {
+                $scope.space.openId = openId;
+                $scope.space.accessToken = accessToken;
+                setAuthentication(openId, accessToken);
+            });
+        }
+        else {
+            $scope.space.openId = auth.openId;
+            $scope.space.accessToken = auth.accessToken;
+        }
 
         $scope.$watch('space.openId', getKnowledges);
 
@@ -149,18 +129,6 @@ var KnowledgeController = ['$scope', '$routeParams', '$location', 'Knowledge',
         };
 
         $scope.getEntityList = getEntityList;
-
-        var auth = getAuthentication();
-        if (auth.openId === "") {
-            QC.Login.getMe(function (openId, accessToken) {
-                $scope.space.openId = openId;
-                $scope.space.accessToken = accessToken;
-            });
-        } else {
-            $scope.space.openId = auth.openId;
-            $scope.space.accessToken = auth.accessToken;
-            getEntityList();
-        }
 
         $scope.addEntity = function () {
             if ($scope.space.entityTitle === undefined || $scope.space.entityContent === undefined) {
@@ -191,6 +159,20 @@ var KnowledgeController = ['$scope', '$routeParams', '$location', 'Knowledge',
             shareContentToQQSpace($scope.space.accessToken
                     , $scope.space.openId, content);
         };
+
+        var auth = getAuthentication();
+        if (auth.openId === "") {
+            QC.Login.getMe(function (openId, accessToken) {
+                $scope.space.openId = openId;
+                $scope.space.accessToken = accessToken;
+                setAuthentication(openId, accessToken);
+            });
+        } else {
+            $scope.space.openId = auth.openId;
+            $scope.space.accessToken = auth.accessToken;
+        }
+
+        $scope.$watch('space.openId', getEntityList);
 
     }];
 

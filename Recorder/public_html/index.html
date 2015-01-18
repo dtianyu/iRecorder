@@ -132,13 +132,19 @@ and open the template in the editor.
                                     nickname: QC.String.escHTML(reqData.nickname), //做xss过滤
                                     figureurl: reqData.figureurl
                                 }));
-                                $("#topInfo").removeClass("nondisplay");
-                                $("#sideMenu").removeClass("nondisplay");
+                                //验证后保存openId和accessToken
+                                QC.Login.getMe(function (openId, accessToken) {
+                                    setAuthentication(openId, accessToken);
+                                });
                                 if (window.opener && !window.opener.closed) {
                                     window.opener.location.reload();
                                 }
                                 window.close();
-                            }, function (opts) {//注销成功  
+                                $("#slideLogin").addClass("nondisplay");
+                                $("#topInfo").removeClass("nondisplay");
+                                $("#sideMenu").removeClass("nondisplay");
+                            }, function (opts) {//注销成功
+                                setAuthentication("", "");
                                 $("#topInfo").addClass("nondisplay");
                                 $("#sideMenu").addClass("nondisplay");
                                 alert('QQ登录 注销成功');
