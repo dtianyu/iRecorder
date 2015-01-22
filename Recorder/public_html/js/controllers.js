@@ -48,8 +48,8 @@ var AuthController = ['$scope', '$location',
         }
     }];
 
-var SpaceController = ['$scope', '$routeParams', '$http', '$location',
-    function ($scope, $routeParams, $http, $location) {
+var SpaceController = ['$scope', '$routeParams', '$http', '$location', 'Knowledge', 'Book',
+    function ($scope, $routeParams, $http, $location, Knowledge, Book) {
 
         $scope.authorized = false;
         if (!QC.Login.check()) {
@@ -59,25 +59,18 @@ var SpaceController = ['$scope', '$routeParams', '$http', '$location',
             $scope.authorized = true;
         }
 
-        var url_knowledge = "http://ar.hanbell.com.cn:8480/RESTWebService/webresources/irecorder.entity.knowledge";
-        var get_knowledge;
         $scope.space = {};
         $scope.space.knowledges;
+        $scope.space.books;
 
         var getKnowledges = function () {
             //alert($scope.space.openId);
-            if ($scope.space.openId !== undefined && $scope.space.openId !== "") {
-                get_knowledge = url_knowledge + '/userid/' + $scope.space.openId + "/top/5";
-                $http.get(get_knowledge).
-                        success(function (response)
-                        {
-                            $scope.space.knowledges = response;
-                        })
-                        .error(function () {
-                            $scope.space.knowledges = [];
-                            alert("暂时没有内容，赶快添加哦！");
-                        });
-            }
+            Knowledge.top($scope.space.openId, $scope);
+        };
+
+        var getBooks = function () {
+            //alert($scope.space.openId);
+            Book.top($scope.space.openId, $scope);
         };
 
         $scope.findMore = function (path) {
@@ -98,13 +91,13 @@ var SpaceController = ['$scope', '$routeParams', '$http', '$location',
                 $scope.space.accessToken = accessToken;
                 setAuthentication(openId, accessToken);
             });
-        }
-        else {
+        } else {
             $scope.space.openId = auth.openId;
             $scope.space.accessToken = auth.accessToken;
         }
 
         $scope.$watch('space.openId', getKnowledges);
+        $scope.$watch('space.openId', getBooks);
 
     }];
 
@@ -123,6 +116,7 @@ var KnowledgeController = ['$scope', '$routeParams', '$location', 'Knowledge',
         $scope.space.knowledges = [];
         $scope.space.entityTitle = '';
         $scope.space.entityContent = '';
+        $scope.space.editEntity;
 
         var getEntityList = function () {
             Knowledge.query($scope.space.openId, $scope);
@@ -144,20 +138,31 @@ var KnowledgeController = ['$scope', '$routeParams', '$location', 'Knowledge',
             if (id === undefined || $scope.space.openId === undefined) {
                 return;
             }
-            //先从客户端缓存数组中移除
-            angular.forEach($scope.space.knowledges, function (item) {
-                if (item.id === id) {
-                    $scope.space.knowledges.splice($scope.space.knowledges.indexOf(item), 1);
-                }
-            });
             //持久化到服务器端
-            Knowledge.delete($scope.space.openId, id);
+            Knowledge.del($scope.space.openId, id, $scope);
+        };
 
+        $scope.editEntity = function (entity) {
+            if (entity === undefined) {
+                return;
+            }
+            $scope.space.editEntity = entity;
+        };
+
+        $scope.saveEntity = function () {
+            if ($scope.space.editEntity === undefined) {
+                return;
+            }
+            Knowledge.save($scope.space.openId, $scope.space.editEntity.id, $scope.space.editEntity, $scope)
         };
 
         $scope.shareToQQSpace = function (content) {
             shareContentToQQSpace($scope.space.accessToken
                     , $scope.space.openId, content);
+        };
+
+        $scope.hideEditModal = function () {
+            $("#editModal").modal('hide');
         };
 
         var auth = getAuthentication();
@@ -173,11 +178,13 @@ var KnowledgeController = ['$scope', '$routeParams', '$location', 'Knowledge',
         }
 
         $scope.$watch('space.openId', getEntityList);
+//        $scope.space.openId = "B7D8B5B9CFF54C9757134B0451243003";
 
     }];
 
-var BookController = ['$scope', '$routeParams', '$http', '$location',
-    function ($scope, $routeParams, $http, $location) {
+var BookController = ['$scope', '$routeParams', '$http', '$location', 'Book',
+    function ($scope, $routeParams, $http, $location, Book) {
+
         $scope.authorized = false;
         if (!QC.Login.check()) {
             $location.path("/login");
@@ -186,57 +193,80 @@ var BookController = ['$scope', '$routeParams', '$http', '$location',
             $scope.authorized = true;
         }
 
-        var url_entity = "http://ar.hanbell.com.cn:8480/RESTWebService/webresources/irecorder.entity.knowledge";
-        var get_entity;
         $scope.space = {};
-        $scope.space.entities;
-        $scope.space.entityTitle = '';
-        $scope.space.entityContent = '';
-        $scope.addEntity = function () {
-            if ($scope.space.entityTitle === undefined || $scope.space.entityContent === undefined) {
-                return;
-            }
-            var entity = {"userid": $scope.space.openId, "title": $scope.space.entityTitle, "content": $scope.space.entityContent};
-            $http.post(url_entity, entity)
-                    .success(function () {
-                        $scope.space.entityTitle = "";
-                        $scope.space.entityContent = "";
-                        getEntityList();
-                        alert("提交成功！");
-                    })
-                    .error(function () {
-                        alert("提交失败，请重试！");
-                    });
-        };
-        $scope.getTimestamp = getTimestamp;
+        $scope.space.books = [];
+        $scope.space.entityName = '';
+        $scope.space.entityAuthor = '';
+        $scope.space.entityCatelog = '';
+        $scope.space.entityISBN = '';
+        $scope.space.entityEvaluate = '';
+        $scope.space.editEntity;
+
         var getEntityList = function () {
             //alert($scope.space.openId);
-            if ($scope.space.openId === undefined) {
+            Book.query($scope.space.openId, $scope);
+        };
+
+        $scope.getEntityList = getEntityList;
+
+        $scope.addEntity = function () {
+            if ($scope.space.entityName === undefined || $scope.space.entityName === "") {
                 return;
             }
-            get_entity = url_entity + '/userid/' + $scope.space.openId;
-            $http.get(get_entity).
-                    success(function (response)
-                    {
-                        $scope.space.entities = response;
-                    })
-                    .error(function () {
-                        $scope.space.entities = [];
-                        alert("暂时没有记录，赶快添加哦！");
-                    });
+            var entity = {"userid": $scope.space.openId, "name": $scope.space.entityName,
+                "author": $scope.space.entityAuthor, "catelog": $scope.space.entityCatelog,
+                "ISBN": $scope.space.entityISBN, "evaluate": $scope.space.entityEvaluate};
+            Book.add(entity, $scope);
+            $scope.space.entityName = "";
+            $scope.space.entityAuthor = "";
+            $scope.space.entityCatelog = '';
+            $scope.space.entityISBN = '';
+            $scope.space.entityEvaluate = "";
         };
+
+        $scope.deleteEntity = function (id) {
+            if (id === undefined || $scope.space.openId === undefined) {
+                return;
+            }
+            //持久化到服务器端
+            Book.del($scope.space.openId, id, $scope);
+        };
+
+        $scope.editEntity = function (entity) {
+            if (entity === undefined) {
+                return;
+            }
+            $scope.space.editEntity = entity;
+        };
+
+        $scope.saveEntity = function () {
+            if ($scope.space.editEntity === undefined) {
+                return;
+            }
+            Book.save($scope.space.openId, $scope.space.editEntity.id, $scope.space.editEntity, $scope)
+        };
+
         $scope.shareToQQSpace = function (content) {
             shareContentToQQSpace($scope.space.accessToken
                     , $scope.space.openId, content);
         };
-//        if ($routeParams.userId !== undefined && $routeParams.userId !== "") {
-//            $scope.space.openId = $routeParams.userId;
-//            getEntityList();
-//        }
+
+        $scope.hideEditModal = function () {
+            $("#editModal").modal('hide');
+        };
+
+        var auth = getAuthentication();
+        if (auth.openId === "") {
+            QC.Login.getMe(function (openId, accessToken) {
+                $scope.space.openId = openId;
+                $scope.space.accessToken = accessToken;
+                setAuthentication(openId, accessToken);
+            });
+        } else {
+            $scope.space.openId = auth.openId;
+            $scope.space.accessToken = auth.accessToken;
+        }
 
         $scope.$watch('space.openId', getEntityList);
-        QC.Login.getMe(function (openId, accessToken) {
-            $scope.space.openId = openId;
-            $scope.space.accessToken = accessToken;
-        });
+//        $scope.space.openId = "B7D8B5B9CFF54C9757134B0451243003";
     }];
