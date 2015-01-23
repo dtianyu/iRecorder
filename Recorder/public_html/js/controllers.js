@@ -118,11 +118,11 @@ var KnowledgeController = ['$scope', '$routeParams', '$location', 'Knowledge',
         $scope.space.entityContent = '';
         $scope.space.editEntity;
 
-        var getEntityList = function () {
+        var getEntityData = function () {
             Knowledge.query($scope.space.openId, $scope);
         };
 
-        $scope.getEntityList = getEntityList;
+        $scope.getEntityData = getEntityData;
 
         $scope.addEntity = function () {
             if ($scope.space.entityTitle === undefined || $scope.space.entityContent === undefined) {
@@ -177,7 +177,7 @@ var KnowledgeController = ['$scope', '$routeParams', '$location', 'Knowledge',
             $scope.space.accessToken = auth.accessToken;
         }
 
-        $scope.$watch('space.openId', getEntityList);
+        $scope.$watch('space.openId', getEntityData);
 //        $scope.space.openId = "B7D8B5B9CFF54C9757134B0451243003";
 
     }];
@@ -187,8 +187,8 @@ var BookController = ['$scope', '$routeParams', '$http', '$location', 'Book',
 
         $scope.authorized = false;
         if (!QC.Login.check()) {
-            $location.path("/login");
-            return;
+//            $location.path("/login");
+//            return;
         } else {
             $scope.authorized = true;
         }
@@ -202,12 +202,12 @@ var BookController = ['$scope', '$routeParams', '$http', '$location', 'Book',
         $scope.space.entityEvaluate = '';
         $scope.space.editEntity;
 
-        var getEntityList = function () {
+        var getEntityData = function () {
             //alert($scope.space.openId);
             Book.query($scope.space.openId, $scope);
         };
 
-        $scope.getEntityList = getEntityList;
+        $scope.getEntityData = getEntityData;
 
         $scope.addEntity = function () {
             if ($scope.space.entityName === undefined || $scope.space.entityName === "") {
@@ -215,7 +215,7 @@ var BookController = ['$scope', '$routeParams', '$http', '$location', 'Book',
             }
             var entity = {"userid": $scope.space.openId, "name": $scope.space.entityName,
                 "author": $scope.space.entityAuthor, "catelog": $scope.space.entityCatelog,
-                "ISBN": $scope.space.entityISBN, "evaluate": $scope.space.entityEvaluate};
+                "isbn": $scope.space.entityISBN, "evaluate": $scope.space.entityEvaluate};
             Book.add(entity, $scope);
             $scope.space.entityName = "";
             $scope.space.entityAuthor = "";
@@ -243,7 +243,8 @@ var BookController = ['$scope', '$routeParams', '$http', '$location', 'Book',
             if ($scope.space.editEntity === undefined) {
                 return;
             }
-            Book.save($scope.space.openId, $scope.space.editEntity.id, $scope.space.editEntity, $scope)
+            var entity = $scope.space.editEntity;
+            Book.save($scope.space.openId, $scope.space.editEntity.id, entity, $scope)
         };
 
         $scope.shareToQQSpace = function (content) {
@@ -255,18 +256,85 @@ var BookController = ['$scope', '$routeParams', '$http', '$location', 'Book',
             $("#editModal").modal('hide');
         };
 
-        var auth = getAuthentication();
-        if (auth.openId === "") {
-            QC.Login.getMe(function (openId, accessToken) {
-                $scope.space.openId = openId;
-                $scope.space.accessToken = accessToken;
-                setAuthentication(openId, accessToken);
-            });
+//        var auth = getAuthentication();
+//        if (auth.openId === "") {
+//            QC.Login.getMe(function (openId, accessToken) {
+//                $scope.space.openId = openId;
+//                $scope.space.accessToken = accessToken;
+//                setAuthentication(openId, accessToken);
+//            });
+//        } else {
+//            $scope.space.openId = auth.openId;
+//            $scope.space.accessToken = auth.accessToken;
+//        }
+
+        $scope.$watch('space.openId', getEntityData);
+        $scope.space.openId = "B7D8B5B9CFF54C9757134B0451243003";
+    }];
+
+var BookDetailController = ['$scope', '$routeParams', '$http', '$location', 'Book',
+    function ($scope, $routeParams, $http, $location, Book) {
+
+        $scope.authorized = false;
+        if (!QC.Login.check()) {
+//            $location.path("/login");
+//            return;
         } else {
-            $scope.space.openId = auth.openId;
-            $scope.space.accessToken = auth.accessToken;
+            $scope.authorized = true;
         }
 
-        $scope.$watch('space.openId', getEntityList);
-//        $scope.space.openId = "B7D8B5B9CFF54C9757134B0451243003";
+        $scope.space = {};
+        $scope.space.book ;
+        $scope.space.entityName = '';
+        $scope.space.entityAuthor = '';
+        $scope.space.entityCatelog = '';
+        $scope.space.entityISBN = '';
+        $scope.space.entityEvaluate = '';
+        $scope.space.editEntity;
+
+        var getEntityData = function () {
+            //alert($scope.space.openId);
+            Book.get($scope.space.openId, $routeParams.bookId, $scope);
+        };
+
+        $scope.getEntityData = getEntityData;
+
+        $scope.editEntity = function (entity) {
+            if (entity === undefined) {
+                return;
+            }
+            $scope.space.editEntity = entity;
+        };
+
+        $scope.saveEntity = function () {
+            if ($scope.space.editEntity === undefined) {
+                return;
+            }
+            var entity = $scope.space.editEntity;
+            Book.save($scope.space.openId, $scope.space.editEntity.id, entity, $scope)
+        };
+
+        $scope.shareToQQSpace = function (content) {
+            shareContentToQQSpace($scope.space.accessToken
+                    , $scope.space.openId, content);
+        };
+
+        $scope.hideEditModal = function () {
+            $("#editModal").modal('hide');
+        };
+
+//        var auth = getAuthentication();
+//        if (auth.openId === "") {
+//            QC.Login.getMe(function (openId, accessToken) {
+//                $scope.space.openId = openId;
+//                $scope.space.accessToken = accessToken;
+//                setAuthentication(openId, accessToken);
+//            });
+//        } else {
+//            $scope.space.openId = auth.openId;
+//            $scope.space.accessToken = auth.accessToken;
+//        }
+
+        $scope.$watch('space.openId', getEntityData);
+        $scope.space.openId = "B7D8B5B9CFF54C9757134B0451243003";
     }];

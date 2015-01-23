@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+var home_url = "http://ar.hanbell.com.cn:8480/RESTWebService/webresources";
 
 var recorderService = angular.module('recorderService', ['ngResource']);
 
@@ -43,8 +44,8 @@ recorderService.factory('Knowledge', ['$http', function ($http) {
             add: function (entity, $scope) {
                 $http.post(base_url, entity)
                         .success(function () {
+                            $scope.getEntityData();
                             alert("提交成功！");
-                            $scope.getEntityList();
                         })
                         .error(function () {
                             alert("提交失败，请重试！");
@@ -54,8 +55,8 @@ recorderService.factory('Knowledge', ['$http', function ($http) {
                 var url = base_url + '/userid/' + userId + '/id/' + Id;
                 $http({method: 'DELETE', url: url})
                         .success(function () {
+                            $scope.getEntityData();
                             alert("删除成功！");
-
                         })
                         .error(function () {
                             alert("删除失败，请重试！");
@@ -75,7 +76,63 @@ recorderService.factory('Knowledge', ['$http', function ($http) {
         };
     }]);
 
-recorderService.factory('Book', ['$http', function ($http) {
+recorderService.factory('BookChapter', ['$http', function ($http) {
+        var base_url = home_url + "/irecorder.entity.bookchapter";
+        return {
+            query: function (bookId, $scope) {
+                var url = base_url + '/bookId/' + bookId;
+                return $http.get(url).success(function (response) {
+                    $scope.space.bookChapters = response;
+                }).error(function () {
+                    alert("获取资料失败");
+                });
+            },
+            get: function (bookId, Id, $scope) {
+                if (bookId !== undefined && bookId !== "" && Id !== undefined && Id !== "") {
+                    var url = base_url + '/bookId/' + bookId + '/id/' + Id;
+                    return $http.get(url).success(function (response) {
+                        $scope.space.bookChapter = response;
+                    }).error(function () {
+                        alert("获取资料失败");
+                    });
+                }
+            },
+            add: function (entity, $scope) {
+                $http.post(base_url, entity)
+                        .success(function () {
+                            $scope.getEntityData();
+                            alert("提交成功！");
+                        })
+                        .error(function () {
+                            alert("提交失败，请重试！");
+                        });
+            },
+            del: function (bookId, Id, $scope) {
+                var url = base_url + '/bookId/' + bookId + '/id/' + Id;
+                $http({method: 'DELETE', url: url})
+                        .success(function () {
+                            $scope.getEntityData();
+                            alert("删除成功！");
+                        })
+                        .error(function () {
+                            alert("删除失败，请重试！");
+                        });
+            },
+            save: function (bookId, Id, entity, $scope) {
+                var url = base_url + '/bookId/' + bookId + '/id/' + Id;
+                $http({method: 'PUT', url: url, data: entity})
+                        .success(function () {
+                            $scope.hideEditModal();
+                            alert("更新成功！");
+                        })
+                        .error(function () {
+                            alert("更新失败，请重试！");
+                        });
+            }
+        };
+    }]);
+
+recorderService.factory('Book', ['$http', 'BookChapter', function ($http, BookChapter) {
         var base_url = "http://ar.hanbell.com.cn:8480/RESTWebService/webresources/irecorder.entity.book";
         return {
             query: function (userId, $scope) {
@@ -96,11 +153,22 @@ recorderService.factory('Book', ['$http', function ($http) {
                     });
                 }
             },
+            get: function (userId, Id, $scope) {
+                if (userId !== undefined && userId !== "" && Id !== undefined && Id !== "") {
+                    var url = base_url + '/userid/' + userId + '/id/' + Id;
+                    return $http.get(url).success(function (response) {
+                        $scope.space.book = response;
+                        $scope.space.book.charpters = BookChapter.query($scope.space.book.id, $scope);
+                    }).error(function () {
+                        alert("获取资料失败");
+                    });
+                }
+            },
             add: function (entity, $scope) {
                 $http.post(base_url, entity)
                         .success(function () {
+                            $scope.getEntityData();
                             alert("提交成功！");
-                            $scope.getEntityList();
                         })
                         .error(function () {
                             alert("提交失败，请重试！");
@@ -110,8 +178,8 @@ recorderService.factory('Book', ['$http', function ($http) {
                 var url = base_url + '/userid/' + userId + '/id/' + Id;
                 $http({method: 'DELETE', url: url})
                         .success(function () {
+                            $scope.getEntityData();
                             alert("删除成功！");
-                            $scope.getEntityList();
                         })
                         .error(function () {
                             alert("删除失败，请重试！");
@@ -131,16 +199,3 @@ recorderService.factory('Book', ['$http', function ($http) {
         };
     }]);
 
-//
-//recorderService.factory('Books', ['Book', '$q', function (Book, $q) {
-//        return function (userId, $scope) {
-//            var delay = $q.defer();
-//            Book.query(userId, $scope, function (books) {
-//                delay.resolve(books);
-//            }, function () {
-//                delay.reject("获取失败");
-//            });
-//            return delay.promise;
-//        };
-//    }]);
-//;

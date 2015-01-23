@@ -12,6 +12,7 @@ app.config(['$routeProvider', function ($routeProvider) {
                 when('/space', {templateUrl: 'partials/space.html', controller: SpaceController}).
                 when('/knowledge', {templateUrl: 'partials/knowledge.html', controller: KnowledgeController}).
                 when('/book', {templateUrl: 'partials/book.html', controller: BookController}).
+                when('/book-detail/:bookId', {templateUrl: 'partials/book-detail.html', controller: BookDetailController}).
                 otherwise({redirectTo: 'space'});
     }]);
 

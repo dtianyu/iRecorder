@@ -2,41 +2,64 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h6 class="panel-title">
-            <span class="title">爱阅读</span>
+            <span class="title">爱阅读-《{{space.book.name}}》</span>
         </h6>
     </div>
     <div class="panel-body">
-        <div>
-            <form class="form-horizontal" role="form" ng-submit="addEntity()">
-                <div class="form-group">
-                    <div class="col-sm-10">
-                        <input id="title" type="text" class="form-control" placeholder="书名" ng-model="space.entityName" required="true"/> 
-                        <input id="title" type="text" class="form-control" placeholder="作家" ng-model="space.entityAuthor" required="true"/>   
-                        <input id="title" type="text" class="form-control" placeholder="分类" ng-model="space.entityCatelog" />                                                     
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="submit" class="btn btn-success btn-sm">添加</button>  
-                    </div>
-                </div>
-            </form>
+        <div class="row">
+            <div class="col-sm-2">
+                <span class="text-primary right">书名</span>
+            </div>
+            <div class="col-sm-4">
+                <p>{{space.book.name}}</p>                        
+            </div>  
+            <div class="col-sm-2">
+                <span class="text-primary right">作者</span>
+            </div>
+            <div class="col-sm-4">
+                <p>{{space.book.author}}</p>                       
+            </div>    
         </div>
-        <ul>
-            <li ng-repeat="e in space.books| filter:query ">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h6 class="panel-title">
-                            <span class="title">
-                                <a><strong>{{e.name}}</strong><small>{{e.author}}</small></a>                                    
-                            </span>
-                            <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareToQQSpace(e.name)"></button>
-                        </h6>
-                    </div>
-                    <div class="panel-body">
-                        <p>{{e.ISBN}}</p>                    
-                    </div>
-                </div>
-            </li>
-        </ul>
+        <div class="row">
+            <div class="col-sm-2">
+                <span class="text-primary right">分类</span>
+            </div>
+            <div class="col-sm-4">
+                <p>{{space.book.catelog}}</p>                
+            </div>
+            <div class="col-sm-2">
+                <span class="text-primary right">ISBN</span>
+            </div>
+            <div class="col-sm-4">
+                <p>{{space.book.isbn}}</p>                                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <span class="text-primary right">摘要</span>
+            </div>
+            <div class="col-sm-10">
+                <p>{{space.book.evaluate}}</p>  
+            </div>
+        </div>
     </div>
+    <ul>
+        <li ng-repeat="c in space.book.chapters| filter:query ">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span class="title">
+                            <a><strong>{{c.title}}</strong></a>                                    
+                        </span>
+                        <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareToQQSpace(c.name)"></button>
+                    </h6>
+                </div>
+                <div class="panel-body">
+                    <p>{{c.content}}</p>                    
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>
+
 

@@ -49,13 +49,13 @@
                     <div class="panel-heading">
                         <h6 class="panel-title">
                             <span class="title">
-                                <a ng-href=""><strong>《{{b.name}}》</strong><small>作者:{{b.author}}</small></a>                                    
+                                <a href="#/book-detail/{{b.id}}"><strong>《{{b.name}}》</strong><small>作者:{{b.author}}</small></a>                                    
                             </span>
                             <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareToQQSpace(b.evaluate)"></button>
                         </h6>
                     </div>
                     <div class="panel-body">
-                        <p>{{b.evaluate}}<a  class="btn btn-xs" data-toggle="modal" data-target="#editModal" ng-click="editEntity(b)">...</a></p>
+                        <p>{{b.evaluate}}<a class="btn btn-xs" data-toggle="modal" data-target="#editModal" ng-click="editEntity(b)">...</a></p>
                         <button type="button" class="btn btn-xs btn-default right" ng-click="deleteEntity(b.id)">X</button>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                     <div class="form-group">
                         <label for="isbn" class="col-sm-2 control-label">ISBN</label>
                         <div class="col-sm-10">
-                            <input id="isbn" type="text" class="form-control" placeholder="ISBN" ng-model="space.editEntity.ISBN" />                        
+                            <input id="isbn" type="text" class="form-control" placeholder="ISBN" ng-model="space.editEntity.isbn" />                        
                         </div>      
                     </div>
                     <div class="form-group">
@@ -109,5 +109,6 @@
             </div>
         </div>
     </div>
-</div><!-- 模态框（Modal） -->  
+</div>
+<!-- 模态框（Modal） -->  
 
