@@ -82,7 +82,7 @@ recorderService.factory('BookChapter', ['$http', function ($http) {
             query: function (bookId, $scope) {
                 var url = base_url + '/bookId/' + bookId;
                 return $http.get(url).success(function (response) {
-                    $scope.space.bookChapters = response;
+                    $scope.space.book.chapters = response;
                 }).error(function () {
                     alert("获取资料失败");
                 });
@@ -91,7 +91,7 @@ recorderService.factory('BookChapter', ['$http', function ($http) {
                 if (bookId !== undefined && bookId !== "" && Id !== undefined && Id !== "") {
                     var url = base_url + '/bookId/' + bookId + '/id/' + Id;
                     return $http.get(url).success(function (response) {
-                        $scope.space.bookChapter = response;
+                        $scope.space.book.chapter = response;
                     }).error(function () {
                         alert("获取资料失败");
                     });
@@ -158,7 +158,7 @@ recorderService.factory('Book', ['$http', 'BookChapter', function ($http, BookCh
                     var url = base_url + '/userid/' + userId + '/id/' + Id;
                     return $http.get(url).success(function (response) {
                         $scope.space.book = response;
-                        $scope.space.book.charpters = BookChapter.query($scope.space.book.id, $scope);
+                        BookChapter.query($scope.space.book.id, $scope);
                     }).error(function () {
                         alert("获取资料失败");
                     });
