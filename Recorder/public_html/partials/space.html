@@ -9,60 +9,61 @@
 </ul>
 <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade in active" id="knowledgeTab">
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h6 class="panel-title">
-            <span class="title">爱学习</span>
-            <button type="button" class="btn btn-xs btn-success right" ng-click="findMore('knowledge')">More</button> 
-        </h6>  
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h6 class="panel-title">
+                    <span class="title">爱学习</span>
+                    <button type="button" class="btn btn-xs btn-success right" ng-click="findMore('knowledge')">More</button> 
+                </h6>  
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li ng-repeat="k in space.knowledges| filter:query ">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">
+                                    <span class="title">
+                                        <a><strong>{{k.title}}</strong></a>                                    
+                                    </span>
+                                    <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareToQQSpace(k.content)"></button>
+                                </h6>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{k.content}}</p>                    
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="panel-body">
-        <ul>
-            <li ng-repeat="k in space.knowledges| filter:query ">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h6 class="panel-title">
-                            <span class="title">
-                                <a><strong>{{k.title}}</strong></a>                                    
-                            </span>
-                            <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareToQQSpace(k.content)"></button>
-                        </h6>
-                    </div>
-                    <div class="panel-body">
-                        <p>{{k.content}}</p>                    
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-        </div></div>
     <div class="tab-pane fade" id="bookTab">
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h6 class="panel-title">
-            <span class="title">爱阅读</span>
-            <button type="button" class="btn btn-xs btn-success right" ng-click="findMore('book')">More</button> 
-        </h6>
-    </div>
-    <div class="panel-body">                
-        <ul>
-            <li ng-repeat="b in space.books| filter:query ">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h6 class="panel-title">
-                            <span class="title">
-                                <a><strong>《{{b.name}}》</strong></a>                                    
-                            </span>
-                            <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareToQQSpace(b.evaluate)"></button>
-                        </h6>
-                    </div>
-                    <div class="panel-body">
-                        <p>{{b.evaluate}}</p>                    
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h6 class="panel-title">
+                    <span class="title">爱阅读</span>
+                    <button type="button" class="btn btn-xs btn-success right" ng-click="findMore('book')">More</button> 
+                </h6>
+            </div>
+            <div class="panel-body">                
+                <ul>
+                    <li ng-repeat="b in space.books| filter:query ">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">
+                                    <span class="title">
+                                        <a href="#/book-detail/{{b.id}}"><strong>《{{b.name}}》</strong></a>                                    
+                                    </span>
+                                    <button type="button" class="btn btn-qq-topic btn-qq-topic-24 right" ng-click="shareToQQSpace(b.evaluate)"></button>
+                                </h6>
+                            </div>
+                            <div class="panel-body">
+                                <p>{{b.evaluate}}</p>                    
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>

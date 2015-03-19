@@ -303,7 +303,7 @@ var BookDetailController = ['$scope', '$routeParams', '$location', 'Book', 'Book
             if (id === undefined) {
                 return;
             }
-            BookChapter.del($scope.space.book.id, id, $scope);
+            BookChapter.del($scope.space.openId, $scope.space.book.id, id, $scope);
         };
 
         $scope.editEntity = function (entity) {
@@ -344,7 +344,7 @@ var BookDetailController = ['$scope', '$routeParams', '$location', 'Book', 'Book
         }
 
         $scope.$watch('space.openId', getEntityData);
-//        $scope.space.openId = "B7D8B5B9CFF54C9757134B0451243003";
+
     }];
 
 var BookChapterController = ['$scope', 'BookChapter',
@@ -359,7 +359,7 @@ var BookChapterController = ['$scope', 'BookChapter',
             if ($scope.space.entityTitle === undefined || $scope.space.entityContent === undefined) {
                 return;
             }
-            var entity = {"bookId": $scope.$parent.space.book.id, "title": $scope.space.entityTitle, "content": $scope.space.entityContent};
+            var entity = {"userid": $scope.$parent.space.openId, "bookId": $scope.$parent.space.book.id, "title": $scope.space.entityTitle, "content": $scope.space.entityContent};
             BookChapter.add(entity, $scope);
             $scope.space.entityTitle = "";
             $scope.space.entityContent = "";

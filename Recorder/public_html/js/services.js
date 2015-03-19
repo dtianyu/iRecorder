@@ -79,17 +79,17 @@ recorderService.factory('Knowledge', ['$http', function ($http) {
 recorderService.factory('BookChapter', ['$http', function ($http) {
         var base_url = home_url + "/irecorder.entity.bookchapter";
         return {
-            query: function (bookId, $scope) {
-                var url = base_url + '/bookId/' + bookId;
+            query: function (userId, bookId, $scope) {
+                var url = base_url + '/userid/' + userId + '/bookId/' + bookId;
                 return $http.get(url).success(function (response) {
                     $scope.space.book.chapters = response;
                 }).error(function () {
                     alert("获取资料失败");
                 });
             },
-            get: function (bookId, Id, $scope) {
+            get: function (userId, bookId, Id, $scope) {
                 if (bookId !== undefined && bookId !== "" && Id !== undefined && Id !== "") {
-                    var url = base_url + '/bookId/' + bookId + '/id/' + Id;
+                    var url = base_url + '/userid/' + userId + '/bookId/' + bookId + '/id/' + Id;
                     return $http.get(url).success(function (response) {
                         $scope.space.book.chapter = response;
                     }).error(function () {
@@ -107,8 +107,8 @@ recorderService.factory('BookChapter', ['$http', function ($http) {
                             alert("提交失败，请重试！");
                         });
             },
-            del: function (bookId, Id, $scope) {
-                var url = base_url + '/bookId/' + bookId + '/id/' + Id;
+            del: function (userId, bookId, Id, $scope) {
+                var url = base_url + '/userid/' + userId + '/bookId/' + bookId + '/id/' + Id;
                 $http({method: 'DELETE', url: url})
                         .success(function () {
                             $scope.getEntityData();
@@ -118,8 +118,8 @@ recorderService.factory('BookChapter', ['$http', function ($http) {
                             alert("删除失败，请重试！");
                         });
             },
-            save: function (bookId, Id, entity, $scope) {
-                var url = base_url + '/bookId/' + bookId + '/id/' + Id;
+            save: function (userId, bookId, Id, entity, $scope) {
+                var url = base_url + '/userid/' + userId + '/bookId/' + bookId + '/id/' + Id;
                 $http({method: 'PUT', url: url, data: entity})
                         .success(function () {
                             $scope.hideEditModal();
@@ -158,7 +158,7 @@ recorderService.factory('Book', ['$http', 'BookChapter', function ($http, BookCh
                     var url = base_url + '/userid/' + userId + '/id/' + Id;
                     return $http.get(url).success(function (response) {
                         $scope.space.book = response;
-                        BookChapter.query($scope.space.book.id, $scope);
+                        BookChapter.query(userId, $scope.space.book.id, $scope);
                     }).error(function () {
                         alert("获取资料失败");
                     });

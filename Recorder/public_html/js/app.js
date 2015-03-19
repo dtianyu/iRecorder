@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-var app = angular.module('recorderApp', ['recorderService', 'ngCookies']);
+var app = angular.module('recorderApp', ['recorderService']);
 
 app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
